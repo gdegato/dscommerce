@@ -15,8 +15,8 @@ export default function Catalog() {
             .then(response => {
                 setProduct(response.data.content)
             }).catch(
-                response => {
-                console.error(response)
+                error => {
+                console.error(error)
             })
     }, [])
 
