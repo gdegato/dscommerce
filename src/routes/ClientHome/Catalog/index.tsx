@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import './styles.css'
 import SearchBar from '../../../components/SearchBar'
 import CatalogCard from '../../../components/CatalogCard'
