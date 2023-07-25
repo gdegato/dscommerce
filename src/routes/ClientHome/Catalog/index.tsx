@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import './styles.css'
@@ -14,6 +15,9 @@ type QueryParams = {
 }
 
 export default function Catalog() {
+
+    const [isLastPage, setIsLastPage] = useState(false)
+
     const [products, setProducts] = useState<ProductDTO[]>([]);
 
     const [queryParams, setQueryParams] = useState<QueryParams>({
@@ -24,7 +28,9 @@ export default function Catalog() {
     useEffect(() => {
         productService.findPageRequest(queryParams.page, queryParams.name)
             .then(response => {
-                setProducts(response.data.content)
+                const nextPage = response.data.content;
+                setProducts(products.concat(nextPage))
+                setIsLastPage(response.data.last)
             }).catch(
                 error => {
                     console.error(error)
@@ -32,9 +38,13 @@ export default function Catalog() {
     }, [queryParams])
 
     function handleSearch(searchText: string) {
-        setQueryParams({ ...queryParams, name: searchText })
+        setProducts([])
+        setQueryParams({ ...queryParams, page: 0, name: searchText })
     }
 
+    function handleNextPageClick() {
+        setQueryParams({ ...queryParams, page: queryParams.page + 1 })
+    }
     return (
         <>
             <main>
@@ -51,7 +61,12 @@ export default function Catalog() {
                                 )
                         }
                     </div>
-                    <ButtonNextPage text='Carregar mais' />
+                    {
+                        !isLastPage &&
+                        <div onClick={handleNextPageClick}>
+                            <ButtonNextPage text='Carregar mais' />
+                        </div>
+                    }
                 </section>
             </main>
         </>
