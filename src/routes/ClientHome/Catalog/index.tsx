@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import './styles.css'
 import SearchBar from '../../../components/SearchBar'
@@ -6,44 +7,34 @@ import ButtonNextPage from '../../../components/ButtonNextPage'
 import { useEffect, useState } from 'react'
 import { ProductDTO } from '../../../models/product'
 import * as productService from '../../../services/product-service'
-import { CategoryDTO } from '../../../models/category'
-
 
 export default function Catalog() {
-    const [product, setProduct] = useState<ProductDTO[]>([]);
+    const [products, setProducts] = useState<ProductDTO[]>([]);
 
-    const objTest: CategoryDTO = {
-        id: 8,
-        name: 'Jardinagem'
-    }
+    const [productName, setProductName] = useState("");
 
     useEffect(() => {
-        //local storage tem q ser string, dai tem q converter de obj para string
-        /*  localStorage.setItem('minhaCategoria', JSON.stringify(objTest)) */
-
-        //Aqui a conversão é o contrario para pegar o dado do storage
-        /*   const obj = JSON.parse(localStorage.getItem('minhaCategoria') || '{}')
-          console.log(obj.name) */
-
-        productService.findAll()
+        productService.findPageRequest(0, productName)
             .then(response => {
-                setProduct(response.data.content)
+                setProducts(response.data.content)
             }).catch(
                 error => {
                     console.error(error)
                 })
-    }, [])
+    }, [productName])
 
-
-
+    function handleSearch(searchText: string) {
+        setProductName(searchText)
+    }
+    
     return (
         <>
             <main>
                 <section id="catalog-section" className="dsc-container">
-                    <SearchBar />
+                    <SearchBar onSearch={handleSearch} />
                     <div className="dsc-catalog-cards dsc-mb20 dsc-mt20">
                         {
-                            product
+                            products
                                 .map(
                                     product =>
                                         <CatalogCard
@@ -58,3 +49,5 @@ export default function Catalog() {
         </>
     )
 }
+
+
