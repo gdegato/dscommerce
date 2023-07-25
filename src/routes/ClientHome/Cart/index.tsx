@@ -1,6 +1,17 @@
+import { useEffect } from 'react'
 import './styles.css'
+import * as cartService from '../../../services/cart-service'
+import { OrderDTO, OrderItemDTO } from '../../../models/order'
 
-import computerImg from '../../../assets/computer.png'
+const item1: OrderItemDTO = new OrderItemDTO(
+    4, 1, "PC Gamer", 1200, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg"
+
+)
+const item2: OrderItemDTO = new OrderItemDTO(
+    5, 2, "Rails for Dummies", 100.99, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg"
+
+)
+
 
 const cart = {
     items: [
@@ -22,6 +33,14 @@ const cart = {
 }
 
 export default function Cart() {
+    
+    const cart: OrderDTO = new OrderDTO();
+    cart.items.push(item1)
+    cart.items.push(item2)
+
+    useEffect(() => {
+        cartService.saveCart(cart)
+    }, [])
 
     return (
         <div>
