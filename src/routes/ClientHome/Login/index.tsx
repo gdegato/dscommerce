@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import './styles.css'
 import { useState } from 'react';
-import { loginRequest } from '../../../services/auth-service';
 import { CredentialsDTO } from '../../../models/auth';
+
+import * as authService from '../../../services/auth-service'
 
 export default function Login() {
 
@@ -15,7 +16,13 @@ export default function Login() {
 
     function handleSubmit(event: any) {
         event.preventDefault();
-        loginRequest(formData)
+        authService.loginRequest(formData)
+            .then(response => {
+                console.log(response.data);
+
+            }).catch(error =>
+                console.log("erro no login", error))
+
     }
 
     function handleInputChange(event: any) {
