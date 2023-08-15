@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import './styles.css'
 import { useEffect, useState } from 'react';
@@ -13,10 +15,6 @@ export default function AdminHome() {
             .then(response => {
                 setUser(response.data)
                 console.log(response.data);
-
-            }).catch((e) => {
-                console.log('erro', e);
-
             })
     }, [])
 
