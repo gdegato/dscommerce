@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "./system";
+import { history } from "./history";
 
 
 export function requestBackend(config: AxiosRequestConfig) {
@@ -29,9 +30,12 @@ axios.interceptors.response.use(
     function (error) {
         if (error.response.status === 401) {
             console.log('deu 401!!!!');
+            history.push('/login')
 
         } if (error.response.status === 403) {
             console.log('deu 403!!!!');
+            history.push('/catalog')
+
 
         }
         return Promise.reject(error);
