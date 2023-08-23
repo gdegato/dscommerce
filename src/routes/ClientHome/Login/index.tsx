@@ -8,10 +8,15 @@ import { CredentialsDTO } from '../../../models/auth';
 
 import * as authService from '../../../services/auth-service'
 import { useNavigate } from 'react-router-dom';
+import { ContextToken } from '../../../utils/context-token';
+
+import { useContext } from 'react'
 
 export default function Login() {
 
-    const navigate = useNavigate()
+    const { setContextTokenPayload } = useContext(ContextToken);
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState<CredentialsDTO>({
         username: '',
@@ -23,6 +28,7 @@ export default function Login() {
         authService.loginRequest(formData)
             .then(response => {
                 authService.saveAccessToken(response.data.access_token)
+                setContextTokenPayload(authService.getAccessTokenPayload())
                 navigate('/cart')
 
             }).catch(error =>
