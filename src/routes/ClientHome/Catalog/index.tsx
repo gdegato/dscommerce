@@ -26,7 +26,7 @@ export default function Catalog() {
     });
 
     useEffect(() => {
-        
+
         productService.findPageRequest(queryParams.page, queryParams.name)
             .then(response => {
                 const nextPage = response.data.content;
@@ -64,9 +64,7 @@ export default function Catalog() {
                     </div>
                     {
                         !isLastPage &&
-                        <div onClick={handleNextPageClick}>
-                            <ButtonNextPage text='Carregar mais' />
-                        </div>
+                        <ButtonNextPage onNextPage={handleNextPageClick} />
                     }
                 </section>
             </main>
