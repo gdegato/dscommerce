@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product'
 import SearchBar from '../../../components/SearchBar';
 import ButtonNextPage from '../../../components/ButtonNextPage';
+import DialogInfo from '../../../components/DialogInfo';
 
 type QueryParams = {
     page: number;
@@ -16,6 +17,10 @@ type QueryParams = {
 }
 
 function ProductListing() {
+    const [dialogInfoData, setDialogInfoData] = useState({
+        visible: false,
+        message: 'Operação com sucesso!'
+    })
 
     const [isLastPage, setIsLastPage] = useState(false)
 
@@ -48,6 +53,13 @@ function ProductListing() {
     function handleNextPageClick() {
         setQueryParams({ ...queryParams, page: queryParams.page + 1 })
     }
+
+    function handleDialogInfoClose() {
+        setDialogInfoData({...dialogInfoData, visible: false})
+    }
+    function handleDeleteClick() {
+        setDialogInfoData({...dialogInfoData, visible: true})
+    }
     return (
         <main>
             <section id="product-listing-section" className="dsc-container">
@@ -79,7 +91,7 @@ function ProductListing() {
                                 <td className="dsc-tb768">R$ {product.price.toFixed(2)}</td>
                                 <td className="dsc-txt-left">{product.name}</td>
                                 <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                                <td><img className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                                <td><img onClick={ handleDeleteClick} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
                             </tr>
                         ))}
 
@@ -96,6 +108,12 @@ function ProductListing() {
                 }
 
             </section>
+            {
+                dialogInfoData.visible &&
+                <DialogInfo message={dialogInfoData.message}
+                    onDialogClose={handleDialogInfoClose}
+                />
+            }
         </main>
     )
 }
