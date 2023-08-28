@@ -1,14 +1,20 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './styles.css'
 import FormInput from '../../../components/FormInput'
 import * as forms from '../../../utils/forms'
+import * as productService from '../../../services/product-service'
 
 function ProductForm() {
+
+    const params = useParams();
+
+    const isEditing = params.productId !== 'create'
 
     const [formData, setFormData] = useState<any>({
 
@@ -40,6 +46,16 @@ function ProductForm() {
         const name = event.target.name;
         setFormData(forms.update(formData, name, value))
     }
+
+    useEffect(() => {
+        if (isEditing) {
+            productService.findById(Number(params.productId))
+                .then(response => {
+                    const newFormData = forms.updateAll(formData, response.data)
+                    setFormData(newFormData)
+                })
+        }
+    }, [])
 
     return (
         <main>
