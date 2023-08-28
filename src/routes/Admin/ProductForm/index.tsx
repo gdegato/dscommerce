@@ -48,12 +48,13 @@ function ProductForm() {
     function handleInputChange(event: any) {
         const value = event.target.value;
         const name = event.target.name;
-        setFormData(forms.update(formData, name, value))
+        const dataUpdated = forms.update(formData, name, value);
+        const dataValidated = forms.validate(dataUpdated, event.target.name)
+        setFormData(dataValidated)
     }
 
     useEffect(() => {
-        const obj = forms.validate(formData, 'price')
-        console.log(obj);
+
         if (isEditing) {
             productService.findById(Number(params.productId))
                 .then(response => {
@@ -75,19 +76,27 @@ function ProductForm() {
                                     {...formData.name}
                                     className="dsc-form-control"
                                     onChange={handleInputChange}
-                                />    </div> <div>
+                                />
+                                <div className='dsc-form-error'>
+                                    {formData.name.message}
+                                </div>
+                            </div>
+                            <div>
                                 <FormInput
                                     {...formData.price}
                                     className="dsc-form-control"
                                     onChange={handleInputChange}
-                                />    </div>   <div>
+                                />
+                                <div className='dsc-form-error'>
+                                    {formData.price.message}
+                                </div>
+                            </div>
+                            <div>
                                 <FormInput
                                     {...formData.imgUrl}
                                     className="dsc-form-control"
                                     onChange={handleInputChange}
                                 /> </div>
-
-
 
 
                             {/*     <div>
