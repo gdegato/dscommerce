@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -55,6 +56,9 @@ function ProductForm() {
 
     useEffect(() => {
 
+        const result = forms.toDirty(formData, "price")
+        console.log(result)
+
         if (isEditing) {
             productService.findById(Number(params.productId))
                 .then(response => {
@@ -62,7 +66,12 @@ function ProductForm() {
                     setFormData(newFormData)
                 })
         }
-    }, [])
+    }, []);
+
+    function handleTurnDirty(name: string) {
+        const newFormData = forms.toDirty(formData, name);
+        setFormData(newFormData);
+    }
 
     return (
         <main>
@@ -75,6 +84,7 @@ function ProductForm() {
                                 <FormInput
                                     {...formData.name}
                                     className="dsc-form-control"
+                                    onTurnDirty={handleTurnDirty}
                                     onChange={handleInputChange}
                                 />
                                 <div className='dsc-form-error'>
@@ -85,6 +95,7 @@ function ProductForm() {
                                 <FormInput
                                     {...formData.price}
                                     className="dsc-form-control"
+                                    onTurnDirty={handleTurnDirty}
                                     onChange={handleInputChange}
                                 />
                                 <div className='dsc-form-error'>
@@ -95,22 +106,11 @@ function ProductForm() {
                                 <FormInput
                                     {...formData.imgUrl}
                                     className="dsc-form-control"
+                                    onTurnDirty={handleTurnDirty}
                                     onChange={handleInputChange}
-                                /> </div>
-
-
-                            {/*     <div>
-                                <select className="dsc-form-control dsc-select" required>
-                                    <option value="" disabled selected>Categorias</option>
-                                    <option value="1">Valor 1</option>
-                                    <option value="2">Valor 2</option>
-                                </select>
+                                />
                             </div>
-                            <div>
-                                <textarea className="dsc-form-control dsc-textarea" placeholder="Descrição"></textarea>
-                            </div> */}
                         </div>
-
                         <div className="dsc-product-form-buttons">
                             <Link to='/admin/products'>
                                 <button type="reset" className="dsc-btn dsc-btn-white">Cancelar</button>
