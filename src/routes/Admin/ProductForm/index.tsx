@@ -46,14 +46,6 @@ function ProductForm() {
         }
     })
 
-    function handleInputChange(event: any) {
-        const value = event.target.value;
-        const name = event.target.name;
-        const dataUpdated = forms.update(formData, name, value);
-        const dataValidated = forms.validate(dataUpdated, event.target.name)
-        setFormData(dataValidated)
-    }
-
     useEffect(() => {
 
         const result = forms.toDirty(formData, "price")
@@ -68,8 +60,14 @@ function ProductForm() {
         }
     }, []);
 
+    function handleInputChange(event: any) {
+        const result = forms.updateAndValidate(formData, event.target.value, event.target.name);
+        setFormData(result)
+    }
+
+
     function handleTurnDirty(name: string) {
-        const newFormData = forms.toDirty(formData, name);
+        const newFormData = forms.dirtyAndValidate(formData, name);
         setFormData(newFormData);
     }
 
