@@ -41,11 +41,11 @@ export function toDirty(inputs: any, name: string) {
 }
 
 export function updateAndValidate(inputs: any, name: string, newValue: any) {
-    const dataUpdated = update(inputs, name, newValue);
-    return validate(dataUpdated, name);
+    const dataUpdated = update(inputs, name, newValue)
+    return validate(dataUpdated, name)
 }
 
-export function dirtyAndValidate(inputs: any, name: string) {
-    const dataDirty = toDirty(inputs, name, );
-    return validate(dataDirty, name);
+export function dirtyAndValidate(inputs: any, name: string,) {
+    const dataDirty = toDirty(inputs, name)
+    return validate(dataDirty, name)
 }
