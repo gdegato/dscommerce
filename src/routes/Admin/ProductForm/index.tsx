@@ -25,6 +25,10 @@ function ProductForm() {
             name: "name",
             type: "text",
             placeholder: "Nome",
+            validation: function (value: string) {
+                return /^.{3,80}$/.test(value);
+            },
+            message: "Informe um nome de 3 a 80 caracteres"
         },
         price: {
             value: "",
