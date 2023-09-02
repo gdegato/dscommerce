@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -12,8 +13,8 @@ import * as forms from '../../../utils/forms'
 import * as productService from '../../../services/product-service'
 import * as categoryService from '../../../services/category-service'
 import FormTextArea from '../../../components/FormTextArea'
-import Select from 'react-select'
 import { CategoryDTO } from '../../../models/category'
+import FormSelect from '../../../components/FormSelect'
 
 
 
@@ -25,7 +26,6 @@ function ProductForm() {
     const [categories, setCategories] = useState<CategoryDTO[]>([]);
 
     const [formData, setFormData] = useState<any>({
-
         name: {
             value: "",
             id: "name",
@@ -65,6 +65,16 @@ function ProductForm() {
                 return /^.{10,}$/.test(value);
             },
             message: "Descrição mínima: 10 caracteres"
+        },
+        categories: {
+            value: [],
+            id: "categories",
+            name: "categories",
+            placeholder: "Categorias",
+            validation: function (value: CategoryDTO[]) {
+                return value.length > 0;
+            },
+            message: "Escolha uma categoria"
         }
     })
 
@@ -132,12 +142,22 @@ function ProductForm() {
                                 />
                             </div>
                             <div>
-                                <Select
-                                    isMulti
+                                <FormSelect
+                                    className="dsc-form-control"
+                                    {...formData.categories}
                                     options={categories}
-                                    getOptionLabel={(obj) => obj.name}
-                                    getOptionValue={(obj) => String(obj.id)}
+                                    onChange={(obj: any) => {
+                                        const newFormData = forms.updateAndValidate(formData, "categories", obj);
+                                        setFormData(newFormData)
+                                    }}
+                                    onTurnDirty={handleTurnDirty}
+                                    isMulti
+                                    getOptionLabel={(obj: any) => obj.name}
+                                    getOptionValue={(obj: any) => String(obj.id)}
                                 />
+                                <div className='dsc-form-error'>
+                                    {formData.categories.message}
+                                </div>
                             </div>
                             <div>
                                 <FormTextArea
