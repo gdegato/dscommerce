@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -72,6 +74,10 @@ function ProductListing() {
     function handleDialogInfoClose() {
         setDialogInfoData({ ...dialogInfoData, visible: false })
     }
+
+    function handleUpdateClick(productId: number) {
+        navigate(`/admin/products/${productId}`)
+    }
     function handleDeleteClick(productId: number) {
         setDialogConfirmationData({ ...dialogConfirmationData, id: productId, visible: true })
     }
@@ -124,8 +130,16 @@ function ProductListing() {
                                 <td><img className="dsc-product-listing-image" src={product.imgUrl} alt={product.name} /></td>
                                 <td className="dsc-tb768">R$ {product.price.toFixed(2)}</td>
                                 <td className="dsc-txt-left">{product.name}</td>
-                                <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar" /></td>
-                                <td><img onClick={() => handleDeleteClick(product.id)} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar" /></td>
+                                <td><img
+                                    onClick={() => handleUpdateClick(product.id)}
+                                    className="dsc-product-listing-btn"
+                                    src={editIcon}
+                                    alt="Editar" /></td>
+                                <td><img
+                                    onClick={() => handleDeleteClick(product.id)}
+                                    className="dsc-product-listing-btn"
+                                    src={deleteIcon}
+                                    alt="Deletar" /></td>
                             </tr>
                         ))}
                     </tbody>

@@ -9,6 +9,7 @@ export const selectStyles = {
         "&:hover": {
             border: "none",
         },
+        paddingLeft: "10px",
     }),
     placeholder: (provided: any) => ({
         ...provided,
