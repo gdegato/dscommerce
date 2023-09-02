@@ -259,16 +259,11 @@ nav a {
   display: none;
 }
 
-.dsc-select:invalid {
-  color: var(--dsc-color-font-placeholder);
-}
 
-.dsc-select option[disabled] {
-  display: none;
-}
+.dsc-form-select-container {
+  padding: unset;
+  height: unset;
 
-.dsc-select option {
-  color: var(--dsc-color-font-primary);
 }
 
 .dsc-textarea {
