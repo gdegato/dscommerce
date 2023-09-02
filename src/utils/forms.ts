@@ -58,7 +58,7 @@ export function toDirtyAll(inputs: any) {
     return newInputs
 }
 
-export function validateAll(inputs: any) {  
+export function validateAll(inputs: any) {
     const newInputs: any = {}
 
     for (let name in inputs) {
@@ -86,4 +86,14 @@ export function hasAnyInvalid(inputs: any) {
         }
     }
     return false;
+}
+
+export function setBackEndErrors(inputs: any, errors: any[]) {
+    const newInputs = { ...inputs };
+    errors.forEach(item => {
+        newInputs[item.fieldName].message = item.message;
+        newInputs[item.fieldName].dirty = "true";
+        newInputs[item.fieldName].invalid = "true";
+    })
+    return newInputs;
 }
