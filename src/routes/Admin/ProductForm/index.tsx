@@ -10,6 +10,7 @@ import './styles.css'
 import FormInput from '../../../components/FormInput'
 import * as forms from '../../../utils/forms'
 import * as productService from '../../../services/product-service'
+import FormTextArea from '../../../components/FormTextArea'
 
 function ProductForm() {
 
@@ -47,10 +48,19 @@ function ProductForm() {
             name: "imgUrl",
             type: "text",
             placeholder: "Imagem",
+        },
+        description: {
+            value: "",
+            id: "description",
+            name: "description",
+            type: "text",
+            placeholder: "Descrição do produto",
+            validation: function (value: string) {
+                return /^.{10,}$/.test(value);
+            },
+            message: "Descrição mínima: 10 caracteres"
         }
     })
-
-
 
     useEffect(() => {
 
@@ -107,6 +117,17 @@ function ProductForm() {
                                     onTurnDirty={handleTurnDirty}
                                     onChange={handleInputChange}
                                 />
+                            </div>
+                            <div>
+                                <FormTextArea
+                                    {...formData.description}
+                                    className="dsc-form-control dsc-textarea"
+                                    onTurnDirty={handleTurnDirty}
+                                    onChange={handleInputChange}
+                                />
+                                <div className='dsc-form-error'>
+                                    {formData.description.message}
+                                </div>
                             </div>
                         </div>
                         <div className="dsc-product-form-buttons">
