@@ -20,7 +20,7 @@ O DSCatalog é um site de venda de produtos diversos. A aplicação permite a us
 
 ## ✔️ Técnicas e tecnologias utilizadas
 
-O DSCatalog está implementado via comunicação com API utilizando Postman e Spring(Back-end). O Front-end foi desenvolvido utilizando React e Typescript, este último, por ser um superset do Javascript, busca evitar erros inesperados ou erros de tipos avisados em tempo de compilação. Foram desenvolvidos testes unitários, mock de funções, requisições, router, simulações de interação com usuaário, inputs e submissão de formulários. Os testes de componentes foram elaborados com o padrão AAA(Arrange, Act, Assert).
+O DSCatalog está implementado via comunicação com API utilizando Postman e Spring(Back-end). O Front-end foi desenvolvido utilizando React e Typescript, este último, por ser um superset do Javascript, busca evitar erros inesperados ou erros de tipos avisados em tempo de compilação. Foram utilizadas funcionalidades diversas, tais como: requisições, router, simulações de interação com usuaário, inputs e submissão de formulários.
 
 Algumas tecnologias utilizadas no desenvolvimento desta aplicação:
 
