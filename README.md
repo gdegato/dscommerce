@@ -1,4 +1,4 @@
-# Desafio Consultando APIs - GITHub e APICEP
+# DSCommerce
 
 Esse projeto foi desenvolvido durante o Curso ReactJS Professional
 
