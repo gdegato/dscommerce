@@ -5,8 +5,6 @@ import './index.css'
 
 window.React = React
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')!).render(  
+    <App />  
 )
